@@ -15,7 +15,7 @@ const postSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
-});
+})
 
 //turning the schema into a model
 const PostMessage = mongoose.model('PostMessage', postSchema);

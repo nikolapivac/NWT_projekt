@@ -2,22 +2,28 @@ import React, { useState } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import useStyles from './styles';
 import FileBase from 'react-file-base64';
+import { useDispatch } from 'react-redux';
+import { createPost } from '../../actions/posts';
     
 
 const Form = () => {
     //creating the state (initializing its properties)
     const [postData, setPostData] = useState({creator: '', title: '', message: '', tags: '', selectedFile: ''})
     const classes = useStyles();
+    const dispatch = useDispatch();
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        
 
+        //we want to dispatch the action for creating a new post here (handling the submit)
+        dispatch(createPost(postData));
     }
     const clear = () => {
 
     }
     return (
         <Paper className={classes.paper}>
-            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit="handleSubmit">
+            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <Typography variant="h6">Creating a Post</Typography>
                 <TextField 
                 name="creator" 
