@@ -3,9 +3,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import postRoutes from './routes/posts.js'
 
 // intializing the app
 const app = express();
+
+// every route inside postRoutes is going to start with /posts
+app.use('/posts', postRoutes);
 
 // setting up the body parser so we can properly send requests
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
