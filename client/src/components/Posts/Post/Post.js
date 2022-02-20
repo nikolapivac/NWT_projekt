@@ -5,8 +5,8 @@ import useStyles from './styles';
 import { faHeart, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
     
-//post is sent as a prop from parent component Posts
-const Post = ({ post }) => {
+//post and setCurrentId are sent as props from parent component Posts
+const Post = ({ post, setCurrentId }) => {
     const classes = useStyles();
     return (
         <Card className={classes.card}>
@@ -16,7 +16,7 @@ const Post = ({ post }) => {
                 <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
             <div className={classes.overlay2}>
-                <Button style={{color:'white'}} size="small" onClick={() => {}}>
+                <Button style={{ color: 'white' }} size="small" onClick={() => setCurrentId(post._id)}>
                     <FontAwesomeIcon icon={faPenToSquare} />
                 </Button>
             </div>

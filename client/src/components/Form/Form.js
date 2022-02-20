@@ -1,30 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import useStyles from './styles';
 import FileBase from 'react-file-base64';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../actions/posts';
-    
-
-const Form = () => {
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, updatePost } from '../../actions/posts';
+ 
+//currentId and setCurrentId were sent as props from App component
+const Form = ({ currentId, setCurrentId }) => {
     //creating the state (initializing its properties)
-    const [postData, setPostData] = useState({creator: '', title: '', message: '', tags: '', selectedFile: ''})
+    const [postData, setPostData] = useState({creator: '', title: '', message: '', tags: '', selectedFile: ''});
+    // mapping through the posts and finding only the post that we need
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const handleSubmit = (e) => {
-        
+    //using useEffect to populate the values of the form with exisiting values (when we want to update the post)
+    //when [] is changed, {} is called
+    useEffect(() => {
+        if(post) setPostData(post);
+    }, [post]);
 
-        //we want to dispatch the action for creating a new post here (handling the submit)
-        dispatch(createPost(postData));
+    const handleSubmit = (e) => {
+        //if we have an id, that means we have to update a post, not create one
+        if(currentId){
+            dispatch(updatePost(currentId, postData));
+        }
+        else{
+            //if we don't have and id, we dispatch the action for creating a new post
+            dispatch(createPost(postData));   
+        }
+        clear();
     }
     const clear = () => {
-
+        setCurrentId(null);
+        setPostData({creator: '', title: '', message: '', tags: '', selectedFile: ''});
     }
     return (
         <Paper className={classes.paper}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">Creating a Post</Typography>
+                <Typography variant="h6">{currentId ? `Editing "${post.title}"` : 'Creating a Post'}</Typography>
                 <TextField 
                 name="creator" 
                 variant="outlined" 
