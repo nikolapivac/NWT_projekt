@@ -5,7 +5,7 @@ import useStyles from './styles';
 import { faHeart, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
-import { deletePost } from '../../../actions/posts'
+import { deletePost, likePost } from '../../../actions/posts'
     
 //post and setCurrentId are sent as props from parent component Posts
 const Post = ({ post, setCurrentId }) => {
@@ -32,13 +32,13 @@ const Post = ({ post, setCurrentId }) => {
                 <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>
-                <Button size="sm" color="primary" onClick={() => {}}>
+                <Button size="sm" color="primary" onClick={() => dispatch(likePost(post._id))}>
                     <FontAwesomeIcon icon={faHeart} />
-                    {post.likeCount} people like this
+                    &nbsp; Like &nbsp; {post.likeCount}
                 </Button>
                 <Button size="sm" color="primary" onClick={() => dispatch(deletePost(post._id))}>
                     <FontAwesomeIcon icon={faTrash} />
-                    Delete
+                    &nbsp; Delete
                 </Button>
             </CardActions>
         </Card>
