@@ -4,10 +4,14 @@ import moment from 'moment';
 import useStyles from './styles';
 import { faHeart, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch } from "react-redux";
+import { deletePost } from '../../../actions/posts'
     
 //post and setCurrentId are sent as props from parent component Posts
 const Post = ({ post, setCurrentId }) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+
     return (
         <Card className={classes.card}>
             <CardMedia className={classes.media} image={post.selectedFile} title={post.title}/>
@@ -32,7 +36,7 @@ const Post = ({ post, setCurrentId }) => {
                     <FontAwesomeIcon icon={faHeart} />
                     {post.likeCount} people like this
                 </Button>
-                <Button size="sm" color="primary" onClick={() => {}}>
+                <Button size="sm" color="primary" onClick={() => dispatch(deletePost(post._id))}>
                     <FontAwesomeIcon icon={faTrash} />
                     Delete
                 </Button>
