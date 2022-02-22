@@ -21,6 +21,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }, [post]);
 
     const handleSubmit = (e) => {
+        e.preventDefault();
         //if we have an id, that means we have to update a post, not create one
         if(currentId){
             dispatch(updatePost(currentId, postData));

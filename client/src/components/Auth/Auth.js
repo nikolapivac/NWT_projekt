@@ -1,16 +1,26 @@
 import React, { useState } from 'react'
-import { Avatar, Button, Paper, Grid, Typography, Container, TextField } from "@material-ui/core";
+import { Avatar, Button, Paper, Grid, Typography, Container } from "@material-ui/core";
 import useStyles from "./styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import Input from './Input';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { signup, signin } from '../../actions/auth';
+
+const initialState = { firstName:'', lastName:'', email:'', password:'', confirmPassword:''};
 
 const Auth = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   //useState for showing/hiding password
   const [showPassword, setShowPassword] = useState(false);
   //useState for switching between Sign In and Sign Up
   const [isSignUp, setIsSignUp] = useState(false);
+  //useState for data we're getting from the sign up form
+  const [formData, setFormData] = useState(initialState);
 
   //show/hide password toggle
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -20,15 +30,21 @@ const Auth = () => {
       handleShowPassword(false);
     }
 
-  const handleSubmit = () => {
-
+  //defining what happens after clicking the Sign Up/In button
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(isSignUp) {
+      dispatch(signup(formData, history));
+    } 
+    else {
+      dispatch(signin(formData, history));
+    }
+  }
+  //filling in the form
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value});
   }
 
-  const handleChange = () => {
-
-  }
-
-  
 
   return (
     <Container component="main" maxWidth="xs">
