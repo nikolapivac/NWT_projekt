@@ -21,7 +21,7 @@ const Post = ({ post, setCurrentId }) => {
             </div>
             <div className={classes.overlay2}>
                 <Button style={{ color: 'white' }} size="small" onClick={() => setCurrentId(post._id)}>
-                    <FontAwesomeIcon icon={faPenToSquare} />
+                    <FontAwesomeIcon className={classes.icon} icon={faPenToSquare} />
                 </Button>
             </div>
             <div className={classes.details}>
@@ -32,11 +32,11 @@ const Post = ({ post, setCurrentId }) => {
                 <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>
-                <Button size="sm" color="primary" onClick={() => dispatch(likePost(post._id))}>
+                <Button className={classes.button} size="sm" onClick={() => dispatch(likePost(post._id))}>
                     <FontAwesomeIcon icon={faHeart} />
                     &nbsp; Like &nbsp; {post.likeCount}
                 </Button>
-                <Button size="sm" color="primary" onClick={() => dispatch(deletePost(post._id))}>
+                <Button className={classes.button} size="sm" onClick={() => dispatch(deletePost(post._id))}>
                     <FontAwesomeIcon icon={faTrash} />
                     &nbsp; Delete
                 </Button>

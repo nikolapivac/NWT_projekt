@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { deepPurple } from '@material-ui/core/colors';
+import { deepPurple, teal, yellow } from '@material-ui/core/colors';
 
 export default makeStyles((theme) => ({
   appBar: {
@@ -12,8 +12,10 @@ export default makeStyles((theme) => ({
     padding: '10px 50px',
   },
   heading: {
-    color: 'rgba(0,183,255, 1)',
+    color: teal[700],
     textDecoration: 'none',
+    fontFamily: "Courier",
+    fontWeight: "bold",
   },
   image: {
     marginLeft: '15px',
@@ -40,4 +42,7 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  button: {
+    backgroundColor: yellow[500],
+  }
 }));

@@ -1,3 +1,4 @@
+import { teal, yellow } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
@@ -30,7 +31,7 @@ export default makeStyles({
   overlay2: {
     position: 'absolute',
     top: '20px',
-    right: '20px',
+    right: '5px',
     color: 'white',
   },
   grid: {
@@ -39,7 +40,7 @@ export default makeStyles({
   details: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '20px',
+    margin: '15px',
   },
   title: {
     padding: '0 16px',
@@ -49,4 +50,11 @@ export default makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  button: {
+    color: teal[800],
+  },
+  icon: {
+    width: 20,
+    height: 20,
+  }
 });
