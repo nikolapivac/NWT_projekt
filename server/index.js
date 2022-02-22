@@ -11,7 +11,6 @@ const app = express();
 dotenv.config();
 
 
-
 // setting up the body parser so we can properly send requests
 app.use(bodyParser.json({ limit: "30mb", extended: true}))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}))
