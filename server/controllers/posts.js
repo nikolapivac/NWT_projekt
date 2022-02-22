@@ -51,10 +51,23 @@ export const deletePost = async (req, res) => {
 export const likePost = async (req, res) => {
     const { id } = req.params;
 
+    if(!req.userId) return res.json({ message: "Unauthenticated!" });
+
     if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that ID.');
 
     const post = await PostMessage.findById(id);
-    const updatedPost = await PostMessage.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
+
+    //checking if the user's id is already among the likes
+    const index = post.likes.findIndex((id) => id === String(req.userId));
+
+    if(index === -1){
+        //the user didn't like the post before, so he likes the post now
+        post.likes.push(req.userId);
+    } else {
+        //the user already liked the post before, so he dislikes the post now
+        post.likes = post.likes.filter((id) => id !== String(req.userId));
+    }
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
 
     res.json(updatedPost);
 }
