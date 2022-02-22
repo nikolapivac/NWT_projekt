@@ -11,6 +11,18 @@ import { deletePost, likePost } from '../../../actions/posts'
 const Post = ({ post, setCurrentId }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem('profile'));
+
+    const Likes = () => {
+        if(post.likes.length > 0){
+            return post.likes.find((like) => like === user?.result?._id) ? (
+                <><FontAwesomeIcon icon={faHeart} />&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}` }</>
+            ) : (
+                <><FontAwesomeIcon icon={faHeart} />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</>
+            );
+        }
+        return <><FontAwesomeIcon icon={faHeart} />&nbsp;Like</>;
+    }
 
     return (
         <Card className={classes.card}>
@@ -19,11 +31,13 @@ const Post = ({ post, setCurrentId }) => {
                 <Typography variant="h6">{post.name}</Typography>
                 <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
             </div>
-            <div className={classes.overlay2}>
-                <Button style={{ color: 'white' }} size="small" onClick={() => setCurrentId(post._id)}>
-                    <FontAwesomeIcon className={classes.icon} icon={faPenToSquare} />
-                </Button>
-            </div>
+            {(user?.result?._id === post?.creator) && (
+                <div className={classes.overlay2}>
+                    <Button style={{ color: 'white' }} size="small" onClick={() => setCurrentId(post._id)}>
+                        <FontAwesomeIcon className={classes.icon} icon={faPenToSquare} />
+                    </Button>
+                </div>
+            )}
             <div className={classes.details}>
                 <Typography variant="body2" color="textSecondary">{post.tags.map((tag) => `#${tag} `)}</Typography>
             </div>
@@ -32,14 +46,16 @@ const Post = ({ post, setCurrentId }) => {
                 <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
             </CardContent>
             <CardActions className={classes.cardActions}>
-                <Button className={classes.button} size="sm" onClick={() => dispatch(likePost(post._id))}>
-                    <FontAwesomeIcon icon={faHeart} />
-                    &nbsp; Like &nbsp; {post.likeCount}
+                <Button className={classes.button} size="sm" disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
+                    <Likes />
                 </Button>
-                <Button className={classes.button} size="sm" onClick={() => dispatch(deletePost(post._id))}>
-                    <FontAwesomeIcon icon={faTrash} />
-                    &nbsp; Delete
-                </Button>
+                {(user?.result?._id === post?.creator) && (
+                    <Button className={classes.button} size="sm" onClick={() => dispatch(deletePost(post._id))}>
+                        <FontAwesomeIcon icon={faTrash} />
+                        &nbsp; Delete
+                    </Button>
+                )}
+                
             </CardActions>
         </Card>
     )
