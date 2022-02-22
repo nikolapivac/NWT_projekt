@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import Input from './Input';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { signup, signin } from '../../actions/auth';
 
 const initialState = { firstName:'', lastName:'', email:'', password:'', confirmPassword:''};
@@ -13,7 +13,7 @@ const initialState = { firstName:'', lastName:'', email:'', password:'', confirm
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   //useState for showing/hiding password
   const [showPassword, setShowPassword] = useState(false);
@@ -34,10 +34,10 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(isSignUp) {
-      dispatch(signup(formData, history));
+      dispatch(signup(formData, navigate));
     } 
     else {
-      dispatch(signin(formData, history));
+      dispatch(signin(formData, navigate));
     }
   }
   //filling in the form

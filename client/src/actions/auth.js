@@ -1,7 +1,8 @@
 import { AUTH } from '../constants/actionTypes';
 import * as api from '../api';
 
-export const signin = (formData, history) => async(dispatch) => {
+
+export const signin = (formData, navigate) => async(dispatch) => {
     try {
         //log in the user
         const { data } = await api.signIn(formData);
@@ -9,13 +10,13 @@ export const signin = (formData, history) => async(dispatch) => {
         dispatch({ type: AUTH, data });
 
         //navigate to the home page
-        history.push("/");
+        navigate("/");
     } catch (error) {
         console.log(error);
     }
 }
 
-export const signup = (formData, history) => async(dispatch) => {
+export const signup = (formData, navigate) => async(dispatch) => {
     try {
         //sign up the user
         const { data } = await api.signUp(formData);
@@ -23,7 +24,7 @@ export const signup = (formData, history) => async(dispatch) => {
         dispatch({ type: AUTH, data });
 
         //navigate to the home page
-        history.push("/");
+        navigate("/");
     } catch (error) {
         console.log(error);
     }
