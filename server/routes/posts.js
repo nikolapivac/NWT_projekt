@@ -4,10 +4,9 @@ import { getPosts, createPost, updatePost, deletePost, likePost } from '../contr
 const router = express.Router();
 
 //ADDING ROUTES
+//we need to define the path and call the controller
 router.get('/', getPosts);
 router.post('/', createPost);
-//patch is used for updating existing documents
-//we need to know the id of which post we need to edit
 router.patch('/:id', updatePost);
 router.delete('/:id', deletePost);
 router.patch('/:id/likePost', likePost);

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
 import dotenv from 'dotenv';
 
 // intializing the app
@@ -18,6 +19,7 @@ app.use(cors());
 
 // every route inside postRoutes is going to start with /posts
 app.use('/posts', postRoutes);
+app.use('/user', userRoutes);
 
 //connecting the server to the database 
 //const CONNECTION_URL = 'mongodb+srv://nikolapivac:nikolapivac123@cluster0.orgti.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
