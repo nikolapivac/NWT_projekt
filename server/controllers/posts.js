@@ -15,7 +15,8 @@ export const getPosts = async (req, res) => {
 export const createPost = async (req, res) => {
     const post = req.body;
 
-    const newPost = new PostMessage(post);
+    //setting the creator to the one with the speicific id
+    const newPost = new PostMessage({...post, creator:req.userId, createdAt: new Date().toISOString() });
     try {
         await newPost.save();
 
