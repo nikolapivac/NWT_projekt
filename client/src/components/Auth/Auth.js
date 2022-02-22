@@ -27,7 +27,7 @@ const Auth = () => {
   //Sing Up - Sign In toggle
   const switchMode = () => {
       setIsSignUp((prevIsSignUp) => !prevIsSignUp);
-      handleShowPassword(false);
+      setShowPassword(false);
     }
 
   //defining what happens after clicking the Sign Up/In button
